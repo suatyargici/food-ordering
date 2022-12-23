@@ -39,13 +39,8 @@ const Search = ({ setIsSearchModal}) => {
                 <span className="font-bold">$10</span>
               </li>
             </ul>
-            <button
-              className="inline-block sm:hidden"
-              onClick={() => setIsMenuModal(true)}
-            >
-              <GiHamburgerMenu className="text-xl transition-all hover:text-primary" />
-            </button>
-            )
+           
+            
           
               <button
                 className="absolute top-3 right-3 p-2"

@@ -3,7 +3,7 @@ import { FaUserAlt, FaShoppingCart, FaSearch } from "react-icons/fa";
 import OutsideClickHandler from "react-outside-click-handler";
 import Title from "../ui/Title";
 import { useState } from "react";
-import { GiCancel } from "react-icons/gi";
+import { GiCancel, GiHamburgerMenu } from "react-icons/gi";
 import Search from "../ui/Search";
 
 const Header = () => {
@@ -55,6 +55,12 @@ const Header = () => {
           <a href="" className="md:inline-block hidden sm">
             <button className="btn-primary">Order Online</button>
           </a>
+          <button
+              className="sm:hidden inline-block"
+              onClick={() => setIsMenuModal(true)}
+            >
+              <GiHamburgerMenu className="text-xl transition-all hover:text-primary" />
+            </button>
         </div>
         {isSearchModal && <Search setIsSearchModal={setIsSearchModal} />}
       </div>
