@@ -3,14 +3,22 @@ import { FaUserAlt, FaShoppingCart, FaSearch } from "react-icons/fa";
 import OutsideClickHandler from "react-outside-click-handler";
 import Title from "../ui/Title";
 import { useState } from "react";
+import { GiCancel } from "react-icons/gi";
+import Search from "../ui/Search";
 
 const Header = () => {
   const [isSearchModal, setIsSearchModal] = useState(false);
+  const [isMenuModal, setIsMenuModal] = useState(false);
+
   return (
     <div className="h-[5.5rem] bg-secondary">
       <div className="container mx-auto flex h-full items-center justify-between text-white">
         <Logo />
-        <nav>
+            <nav
+          className={`sm:static absolute top-0 left-0 sm:w-auto sm:h-auto w-full h-full sm:text-white text-black sm:bg-transparent bg-white sm:flex hidden ${
+            isMenuModal === true && "!grid place-content-center"
+          }`}
+        >
           <ul className="flex gap-x-2">
             <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
               <a href="">Home</a>
@@ -24,6 +32,14 @@ const Header = () => {
             <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
               <a href="">Book Table</a>
             </li>
+            {isMenuModal && (
+            <button
+              className="absolute  top-4 right-4 z-50"
+              onClick={() => setIsMenuModal(false)}
+            >
+              <GiCancel size={25} className=" transition-all" />
+            </button>
+          )}
           </ul>
         </nav>
         <div className="flex items-center gap-x-4">
@@ -36,18 +52,13 @@ const Header = () => {
           <button onClick={() => setIsSearchModal(true)}>
             <FaSearch className="transition-all hover:text-primary" />
           </button>
-          <a href="">
+          <a href="" className="md:inline-block hidden sm">
             <button className="btn-primary">Order Online</button>
           </a>
         </div>
+        {isSearchModal && <Search setIsSearchModal={setIsSearchModal} />}
       </div>
-      {isSearchModal && (
-        <OutsideClickHandler onOutsideClick={() => setIsSearchModal(false)}>
-          <div className="">
-            <Title addClass="text-9xl">Title</Title>
-          </div>
-        </OutsideClickHandler>
-      )}
+     
     </div>
   );
 };
