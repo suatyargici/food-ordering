@@ -5,19 +5,24 @@ import Title from "../ui/Title";
 import { useState } from "react";
 import { GiCancel, GiHamburgerMenu } from "react-icons/gi";
 import Search from "../ui/Search";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [isSearchModal, setIsSearchModal] = useState(false);
   const [isMenuModal, setIsMenuModal] = useState(false);
+  const router = useRouter();
+
 
   return (
-    <div className="h-[5.5rem] bg-secondary">
+    <div  className={`h-[5.5rem] z-50 relative ${
+      router.asPath === "/" ? "bg-transparent" : "bg-secondary"
+    }`}>
       <div className="container mx-auto flex h-full items-center justify-between text-white">
         <Logo />
             <nav
-          className={`sm:static absolute top-0 left-0 sm:w-auto sm:h-auto w-full h-full sm:text-white text-black sm:bg-transparent bg-white sm:flex hidden ${
-            isMenuModal === true && "!grid place-content-center"
-          }`}
+              className={`sm:static absolute top-0 left-0 sm:w-auto sm:h-auto w-full h-screen sm:text-white text-black sm:bg-transparent bg-white sm:flex hidden  ${
+                isMenuModal === true && "!grid place-content-center"
+              }`} 
         >
           <ul className="flex gap-x-2">
             <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
