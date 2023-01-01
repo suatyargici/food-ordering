@@ -46,6 +46,8 @@ const Reservation = () => {
             <Input />
             <Input />
             <Input />
+            <Input />
+
           </div>
           <button className="btn-primary mt-4">BOOK NOW</button>
         </div>
