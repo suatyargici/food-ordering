@@ -41,12 +41,9 @@ const Reservation = () => {
       <div className="flex justify-between flex-wrap gap-10">
         <div className="lg:flex-1 w-full">
           <div className="flex flex-col gap-y-3">
-            <Input />
-            <Input />
-            <Input />
-            <Input />
-            <Input />
-            <Input />
+          {inputs.map((input) => (
+              <Input key={input.id} {...input} />
+            ))}
 
           </div>
           <button className="btn-primary mt-4">BOOK NOW</button>
