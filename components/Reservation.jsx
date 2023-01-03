@@ -8,16 +8,19 @@ const Reservation = () => {
     actions.resetForm();
   };
 
-  const { values, handleSubmit, handleChange } = useFormik({
-    initialValues: {
-      fullName: "",
-      phoneNumber: "",
-      email: "",
-      persons: "",
-      date: "",
-    },
-    onSubmit,
-  });
+
+  const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
+    useFormik({
+      initialValues: {
+        fullName: "",
+        phoneNumber: "",
+        email: "",
+        persons: "",
+        date: "",
+      },
+      onSubmit,
+      validationSchema: reservationSchema,
+    });
 
   const inputs = [
     {
