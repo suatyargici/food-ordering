@@ -3,27 +3,33 @@
 @tailwind utilities;
 
 body {
-    padding: 0;
-    margin: 0;
-    font-family: "Open Sans", sans-serif;
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-  
-  .btn-primary {
-    @apply text-white px-[30px] py-[8px] rounded-3xl bg-primary cursor-pointer hover:opacity-70 transition-all;
-  }
+  padding: 0;
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+}
 
-  .slick-dots {
-    @apply !flex justify-start w-full;
-  }
-  
-  .slick-dots .slick-active div {
-    @apply bg-primary w-4 h-4 rounded-full;
-  }
-  
-  .slick-dots div {
-    @apply !m-0 !mt-8;
-  }
+* {
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  @apply cursor-pointer rounded-3xl bg-primary px-[30px] py-[8px] text-white transition-all hover:opacity-70;
+}
+
+.slick-dots {
+  @apply !flex w-full justify-start;
+}
+
+.slick-dots .slick-active div {
+  @apply h-4 w-4 rounded-full bg-primary;
+}
+
+.slick-dots div {
+  @apply !m-0 !mt-8;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
