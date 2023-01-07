@@ -4,6 +4,7 @@ import Header from '../components/layout/Header'
 import MenuWrapper from '../components/product/MenuWrapper'
 import About from '../components/About'
 import Reservation from '../components/Reservation'
+import Customers from '../components/customers/Customers'
 const Index = () => {
   return (
     <div>
@@ -12,6 +13,7 @@ const Index = () => {
       <MenuWrapper/>
       <About />
       <Reservation/>
+      <Customers/>
     </div>
   )
 }
