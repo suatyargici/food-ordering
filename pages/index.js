@@ -9,13 +9,11 @@ import Footer from '../components/layout/Footer'
 const Index = () => {
   return (
     <div>
-      <Header />
       <Home/>
       <MenuWrapper/>
       <About />
       <Reservation/>
       <Customers/>
-      <Footer />
     </div>
   )
 }
