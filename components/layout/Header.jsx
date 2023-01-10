@@ -27,27 +27,20 @@ const Header = () => {
           }`}
         >
           <ul className="flex gap-x-2">
-            <Link href="/">
-              <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
-                <a href="">Home</a>
-              </li>
-            </Link>
-            <Link link="/menu">
-              <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
-                <a href="">Menu</a>
-              </li>
-            </Link>
-            <Link href="/about">
-              i{" "}
-              <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
-                <a href="">About</a>
-              </li>
-            </Link>
-            <Link href="/reservation">
-              <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
-                <a href="">Book Table</a>
-              </li>
-            </Link>
+            <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
+              <Link href="/">Home</Link>
+            </li>
+
+            <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
+              <Link href="/menu">Menu</Link>
+            </li>
+
+            <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
+              <Link href="/about">About</Link>
+            </li>
+            <li className="cursor-pointer px-[5px] py-[10px] uppercase hover:text-primary">
+              <Link href="/reservation">Book Table</Link>
+            </li>
             {isMenuModal && (
               <button
                 className="absolute  top-4 right-4 z-50"
