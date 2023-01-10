@@ -55,9 +55,9 @@ const Header = () => {
           <Link href="auth/login">
             <FaUserAlt className="transition-all hover:text-primary cursor-pointer" />
           </Link>
-          <a href="#">
+          <Link href="/card">
             <FaShoppingCart className="transition-all hover:text-primary" />
-          </a>
+          </Link>
           <button onClick={() => setIsSearchModal(true)}>
             <FaSearch className="transition-all hover:text-primary" />
           </button>
