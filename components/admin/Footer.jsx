@@ -113,7 +113,7 @@ const Footer = () => {
           <Input placeholder="Link Address" value="https://" onChange="" />
           <Input
             placeholder="Icon Name"
-            defaulValue="fa fa-"
+            defaultValue="fa fa-"
             onChange={(e) => setIconName(e.target.value)}
             value={iconName}
           />
