@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { useState } from "react";
 import Category from "../../components/admin/Category";
+import Footer from "../../components/admin/Footer";
 import Account from "../../components/profile/Account";
 import Order from "../../components/profile/Order";
 import Password from "../../components/profile/Password";
@@ -50,9 +51,10 @@ const Profile = () => {
             <i className="fa fa-ellipsis-h"></i>
             <button className="ml-1">Categories</button>
           </li>
-          <li
-
-           
+          <li   
+          className={`border w-full p-3 cursor-pointer hover:bg-primary hover:text-white transition-all ${
+            tabs === 3 && "bg-primary text-white"
+          }`}     
             onClick={() => setTabs(3)}
           >
             <i className="fa fa-window-maximize"></i>
@@ -72,6 +74,7 @@ const Profile = () => {
       {tabs === 0 && <Account />}
       {tabs === 1 && <Order />}
       {tabs === 2 && <Category />}
+      {tabs === 3 && <Footer />}
     </div>
   );
 };
