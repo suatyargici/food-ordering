@@ -4,9 +4,12 @@ import Input from "../../components/form/Input";
 import Title from "../../components/ui/Title";
 import * as Yup from "yup";
 import { useSession, signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 const Login = () => {
   const { data: session } = useSession();
- 
+  const {push} = useRouter();
   const loginSchema = Yup.object({
     email: Yup.string()
       .required("Email is required.")
@@ -23,11 +26,25 @@ const Login = () => {
   const onSubmit = async (values, actions) => {
     const { email, password } = values;
     let options = { redirect: false, email, password };
-    const res = await signIn("credentials", options);
-    // actions.resetForm();
-    console.log(session);
+    try{
+      const res = await signIn("credentials", options);
+      actions.resetForm();
+      if (res.status === 200) {
+        toast.success("You have successfully logged in.");
+        push("/profile")
+      }
+ 
+    }catch(err){
+
+    }
+   
   };
 
+  useEffect(() => {
+    if (session) {
+      push("/profile");
+    }
+  }, [session, push]);
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
       initialValues: {

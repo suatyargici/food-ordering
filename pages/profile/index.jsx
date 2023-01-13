@@ -7,6 +7,9 @@ import { useState } from "react";
 import Account from "../../components/profile/Account";
 import Password from "../../components/profile/Password";
 import Order from "../../components/profile/Order";
+import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
+import { useEffect} from "react";
 
 const Profile = () => {
   const [tabs, setTabs] = useState(0);
@@ -29,6 +32,22 @@ const Profile = () => {
     await new Promise((resolve) => setTimeout(resolve, 4000));
     actions.resetForm();
   };
+
+  const { push } = useRouter();
+  const { data: session } = useSession();
+
+  const handleSignOut = () => {
+    if (confirm("Are you sure you want to sign out?")) {
+      signOut({ redirect: false });
+      push("/auth/login");
+    }
+  };
+
+  useEffect(() => {
+    if (!session) {
+      push("/auth/login");
+    }
+  }, [session, push]);
 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
@@ -144,7 +163,7 @@ const Profile = () => {
             className={`w-full cursor-pointer border p-3 transition-all hover:bg-primary hover:text-white ${
               tabs === 3 && "bg-primary text-white"
             }`}
-            onClick={() => setTabs(3)}
+            onClick={handleSignOut}
           >
             <button className="ml-1">Exit</button>
           </li>

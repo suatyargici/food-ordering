@@ -5,8 +5,12 @@ import Title from "../../components/ui/Title";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+
 
 const Register = () => {
+  const {push} =useRouter();
+
   const registerSchema = Yup.object({
     fullName: Yup.string()
       .required("Full name is required.")
@@ -37,6 +41,7 @@ const Register = () => {
         toast.success(
           "You have successfully registered. Please check your email to verify your account."
         );
+        push("/auth/login")
       }
     } catch (err) {
       console.log(err);

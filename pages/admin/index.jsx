@@ -30,11 +30,12 @@ const Admin = () => {
         actions.resetForm();
         toast.success("Admin Login Success!");
         push("/admin/profile");
+        actions.resetForm();
       }
     } catch (err) {
       toast.error(err.response.data.message);
     }
-    // actions.resetForm();
+  
   };
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
