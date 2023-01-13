@@ -32,7 +32,7 @@ const Admin = () => {
         push("/admin/profile");
       }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.message);
     }
     // actions.resetForm();
   };
