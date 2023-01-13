@@ -9,15 +9,15 @@ import { useRouter } from "next/router";
 
 const Admin = () => {
   const { push } = useRouter();
-  
-    const adminSchema = Yup.object({
-        username: Yup.string()
-          .required("Username is required.")
-          .min(3, "Username must be at least 3 characters."),
-        password: Yup.string()
-          .required("Password is required.")
-          .min(5, "Password must be at least 8 characters.")
-      });
+
+  const adminSchema = Yup.object({
+    username: Yup.string()
+      .required("Username is required.")
+      .min(3, "Username must be at least 3 characters."),
+    password: Yup.string()
+      .required("Password is required.")
+      .min(5, "Password must be at least 8 characters."),
+  });
 
   const onSubmit = async (values, actions) => {
     try {
@@ -70,11 +70,11 @@ const Admin = () => {
   return (
     <div className="container mx-auto py-3">
       <form
-        className="flex flex-col items-center my-20 md:w-1/2 w-full mx-auto"
+        className="my-20 mx-auto flex w-full flex-col items-center md:w-1/2"
         onSubmit={handleSubmit}
       >
         <Title addClass="text-[40px] mb-6">Admin Login</Title>
-        <div className="flex flex-col gap-y-3 w-full">
+        <div className="flex w-full flex-col gap-y-3">
           {inputs.map((input) => (
             <Input
               key={input.id}
@@ -84,10 +84,10 @@ const Admin = () => {
             />
           ))}
         </div>
-        <div className="flex flex-col w-full gap-y-3 mt-6">
+        <div className="mt-6 flex w-full flex-col gap-y-3">
           <button className="btn-primary">LOGIN</button>
           <Link href="/">
-            <span className="text-sm underline cursor-pointer text-secondary">
+            <span className="cursor-pointer text-sm text-secondary underline">
               Home Page
             </span>
           </Link>
@@ -97,4 +97,19 @@ const Admin = () => {
   );
 };
 
-export default Admin
+export const getServerSideProps = (ctx) => {
+  const myCookie = ctx.req?.cookies || "";
+  if (myCookie.token === process.env.ADMIN_TOKEN) {
+    return {
+      redirect: {
+        destination: "/admin/profile",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+export default Admin;
