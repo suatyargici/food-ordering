@@ -4,9 +4,9 @@ import Input from "../../components/form/Input";
 import Title from "../../components/ui/Title";
 import * as Yup from "yup";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Register = () => {
- 
   const registerSchema = Yup.object({
     fullName: Yup.string()
       .required("Full name is required.")
@@ -32,12 +32,18 @@ const Register = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
         values
       );
+      if (res.status === 200) {
+        actions.resetForm();
+        toast.success(
+          "You have successfully registered. Please check your email to verify your account."
+        );
+      }
     } catch (err) {
       console.log(err);
-    
-     actions.resetForm(); 
+
+      actions.resetForm();
+    }
   };
-}
 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
@@ -89,8 +95,6 @@ const Register = () => {
       touched: touched.confirmPassword,
     },
   ];
-  
-  
 
   return (
     <div className="container mx-auto">
@@ -110,7 +114,9 @@ const Register = () => {
           ))}
         </div>
         <div className="mt-6 flex w-full flex-col gap-y-3">
-          <button className="btn-primary" type="submit">REGISTER</button>
+          <button className="btn-primary" type="submit">
+            REGISTER
+          </button>
           <Link href="/auth/login">
             <span className="cursor-pointer text-sm text-secondary underline">
               Do you have a account?
