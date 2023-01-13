@@ -3,24 +3,38 @@ import Link from "next/link";
 import Input from "../../components/form/Input";
 import Title from "../../components/ui/Title";
 import * as Yup from "yup";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const Admin = () => {
+  const { push } = useRouter();
+  
     const adminSchema = Yup.object({
         username: Yup.string()
           .required("Username is required.")
           .min(3, "Username must be at least 3 characters."),
         password: Yup.string()
           .required("Password is required.")
-          .min(8, "Password must be at least 8 characters.")
-          .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            "Password must contain at least one uppercase, one lowercase, one number and one special character."
-          ),
+          .min(5, "Password must be at least 8 characters.")
       });
 
   const onSubmit = async (values, actions) => {
-    await new Promise((resolve) => setTimeout(resolve, 4000));
-    actions.resetForm();
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/admin`,
+        values
+      );
+      if (res.status === 200) {
+        console.log(res.data);
+        actions.resetForm();
+        toast.success("Admin Login Success!");
+        push("/admin/profile");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    // actions.resetForm();
   };
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
