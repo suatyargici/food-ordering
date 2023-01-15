@@ -17,10 +17,10 @@ const Profile = () => {
   const profileSchema = Yup.object({
     fullName: Yup.string()
       .required("Full name is required.")
-      .min(3, "Full name must be at least 3 characters."),
+      .min(4, "Full name must be at least 4 characters."),
     phoneNumber: Yup.string()
       .required("Phone Number is required.")
-      .min(10, "Phone number must be at least 10 characters."),
+      .min(9, "Phone number must be at least 9 characters."),
     email: Yup.string()
       .required("Email is required.")
       .email("Email is invalid."),
