@@ -6,10 +6,11 @@ import * as Yup from "yup";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { data: session } = useSession();
-  const {push} = useRouter();
+  const { push } = useRouter();
   const loginSchema = Yup.object({
     email: Yup.string()
       .required("Email is required.")
@@ -26,25 +27,18 @@ const Login = () => {
   const onSubmit = async (values, actions) => {
     const { email, password } = values;
     let options = { redirect: false, email, password };
-    try{
+    try {
       const res = await signIn("credentials", options);
       actions.resetForm();
       if (res.status === 200) {
         toast.success("You have successfully logged in.");
-        push("/profile")
+        push("/profile");
       }
- 
-    }catch(err){
-
+    } catch (err) {
+      toast.error(err.res.data.message);
     }
-   
   };
 
-  useEffect(() => {
-    if (session) {
-      push("/profile");
-    }
-  }, [session, push]);
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
       initialValues: {
@@ -94,7 +88,7 @@ const Login = () => {
           ))}
         </div>
         <div className="mt-6 flex w-full flex-col gap-y-3">
-        <button className="btn-primary" type="submit">
+          <button className="btn-primary" type="submit">
             LOGIN
           </button>
           <button

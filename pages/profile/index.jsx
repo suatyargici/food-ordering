@@ -3,13 +3,12 @@ import Input from "../../components/form/Input";
 import Title from "../../components/ui/Title";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Account from "../../components/profile/Account";
 import Password from "../../components/profile/Password";
 import Order from "../../components/profile/Order";
 import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/react";
-import { useEffect} from "react";
+import { signOut, useSession, getSession } from "next-auth/react";
 
 const Profile = () => {
   const [tabs, setTabs] = useState(0);
@@ -119,7 +118,7 @@ const Profile = () => {
     },
   ];
   return (
-    <div className="flex sm:px-10 min-h-[calc(100vh_-_433px)] lg:flex-row flex-col max-[768px]:items-center p-10">
+    <div className="max-[768px]:items-center flex min-h-[calc(100vh_-_433px)] flex-col p-10 sm:px-10 lg:flex-row">
       <div className="w-70 sm:w-80 sm:flex-shrink-0">
         <div className="relative flex flex-col items-center border border-b-0 px-10 py-5">
           <Image
@@ -177,5 +176,23 @@ const Profile = () => {
     </div>
   );
 };
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
 
 export default Profile;
