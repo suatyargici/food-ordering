@@ -171,7 +171,7 @@ const Profile = ({user}) => {
       </div>
       <div className="flex-1">
         {tabs === 0 && <Account user={user}/>}
-        {tabs === 1 && <Password />}
+        {tabs === 1 && <Password user ={user}/>}
         {tabs === 2 && <Order />}
       </div>
     </div>

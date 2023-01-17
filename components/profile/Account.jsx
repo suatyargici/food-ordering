@@ -31,9 +31,10 @@ const Account = ({ user }) => {
     }
     actions.resetForm();
   };
-  console.log(user);
+ 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
+      enableReinitialize:true,
       initialValues: {
         fullName: user?.fullName,
         phoneNumber: user?.phoneNumber,
@@ -120,7 +121,7 @@ const Account = ({ user }) => {
         onClick={() => {
           setTimeout(() => {
             window.location.reload();
-          }, 2000);
+          }, 1000);
         }}
       >
         Update

@@ -59,7 +59,7 @@ const Index = () => {
     dispatch(addProduct({ ...foodItems[0], extras, price, quantity: 1 }));
   };
 
-  console.log(cart);
+
 
   const foodItems = [
     {

@@ -16,6 +16,7 @@ const Profile = () => {
 
   const { push } = useRouter();
 
+
   const closeAdminAccount = async () => {
     try {
       if (confirm("Are you sure you want to close your Admin Account?")) {
