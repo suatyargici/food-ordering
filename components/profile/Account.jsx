@@ -3,35 +3,44 @@ import Input from "../../components/form/Input";
 import Title from "../../components/ui/Title";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
-
-const Account = () => {
-    const profileSchema = Yup.object({
-        fullName: Yup.string()
-          .required("Full name is required.")
-          .min(3, "Full name must be at least 3 characters."),
-        phoneNumber: Yup.string()
-          .required("Phone Number is required.")
-          .min(10, "Phone number must be at least 10 characters."),
-        email: Yup.string().required("Email is required.").email("Email is invalid."),
-        address: Yup.string().required("Address is required."),
-        job: Yup.string().required("Job is required."),
-        bio: Yup.string().required("Bio is required."),
-      });
+const Account = ({ user }) => {
+  const profileSchema = Yup.object({
+    fullName: Yup.string()
+      .required("Full name is required.")
+      .min(3, "Full name must be at least 3 characters."),
+    phoneNumber: Yup.string()
+      .required("Phone Number is required.")
+      .min(10, "Phone number must be at least 10 characters."),
+    email: Yup.string()
+      .required("Email is required.")
+      .email("Email is invalid."),
+    address: Yup.string().required("Address is required."),
+    job: Yup.string().required("Job is required."),
+    bio: Yup.string().required("Bio is required."),
+  });
   const onSubmit = async (values, actions) => {
-    await new Promise((resolve) => setTimeout(resolve, 4000));
+    try {
+      const res = await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${user._id}`,
+        values
+      );
+    } catch (err) {
+      console.log(err);
+    }
     actions.resetForm();
   };
-
+  console.log(user);
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
       initialValues: {
-        fullName: "",
-        phoneNumber: "",
-        email: "",
-        address: "",
-        job: "",
-        bio: "",
+        fullName: user?.fullName,
+        phoneNumber: user?.phoneNumber,
+        email: user?.email,
+        address: user?.address,
+        job: user?.job,
+        bio: user?.bio,
       },
       onSubmit,
       validationSchema: profileSchema,
@@ -93,9 +102,9 @@ const Account = () => {
     },
   ];
   return (
-    <form className="lg:p-8 flex-1 lg:mt-0 mt-5">
+    <form className="mt-5 flex-1 lg:mt-0 lg:p-8" onSubmit={handleSubmit}>
       <Title addClass="text-[40px]">Account Settings</Title>
-      <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 mt-4">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
         {inputs.map((input) => (
           <Input
             key={input.id}
@@ -105,7 +114,17 @@ const Account = () => {
           />
         ))}
       </div>
-      <button className="btn-primary mt-4">Update</button>
+      <button
+        className="btn-primary mt-4"
+        type="submit"
+        onClick={() => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }}
+      >
+        Update
+      </button>
     </form>
   );
 };

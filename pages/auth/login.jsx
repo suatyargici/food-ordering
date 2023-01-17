@@ -5,11 +5,14 @@ import Title from "../../components/ui/Title";
 import * as Yup from "yup";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { getSession } from "next-auth/react";
+import axios from "axios";
 
-const Login = () => {
+const Login = ({ user }) => {
   const { data: session } = useSession();
+  const [current, setCurrent] = useState();
   const { push } = useRouter();
   const loginSchema = Yup.object({
     email: Yup.string()
@@ -32,12 +35,27 @@ const Login = () => {
       actions.resetForm();
       if (res.status === 200) {
         toast.success("You have successfully logged in.");
-        push("/profile");
+        // push("/profile/6317cd1273654e130f7d5f91");
       }
     } catch (err) {
       toast.error(err.res.data.message);
     }
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`);
+        setCurrent(
+          res.data?.find((user) => user.email === session?.user?.email)
+        );
+        push("/profile/" + current?._id);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, [session, push,current]);
 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
@@ -109,5 +127,25 @@ const Login = () => {
     </div>
   );
 };
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`);
+  const user = res.data?.find((user) => user.email === session?.user.email);
+  if (session && user) {
+    return {
+      redirect: {
+        destination: "/profile/" + user._id,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      user: user ? user : null,
+    },
+  };
+}
 
 export default Login;

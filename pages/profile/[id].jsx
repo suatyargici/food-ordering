@@ -9,10 +9,10 @@ import Password from "../../components/profile/Password";
 import Order from "../../components/profile/Order";
 import { useRouter } from "next/router";
 import { signOut, useSession, getSession } from "next-auth/react";
+import axios from "axios";
 
-const Profile = () => {
+const Profile = ({user}) => {
   const [tabs, setTabs] = useState(0);
-
   const profileSchema = Yup.object({
     fullName: Yup.string()
       .required("Full name is required.")
@@ -117,18 +117,19 @@ const Profile = () => {
       touched: touched.bio,
     },
   ];
+  
   return (
     <div className="max-[768px]:items-center flex min-h-[calc(100vh_-_433px)] flex-col p-10 sm:px-10 lg:flex-row">
       <div className="w-70 sm:w-80 sm:flex-shrink-0">
         <div className="relative flex flex-col items-center border border-b-0 px-10 py-5">
           <Image
-            src="/images/client2.jpg"
+            src={user.image ? user.image :"/images/client2.jpg"}
             alt=""
             width={100}
             height={100}
             className="rounded-full"
           />
-          <b className="mt-1 text-2xl">John Doe</b>
+          <b className="mt-1 text-2xl">{user.fullName}</b>
         </div>
         <ul className="text-center font-semibold">
           <li
@@ -169,28 +170,21 @@ const Profile = () => {
         </ul>
       </div>
       <div className="flex-1">
-        {tabs === 0 && <Account />}
+        {tabs === 0 && <Account user={user}/>}
         {tabs === 1 && <Password />}
         {tabs === 2 && <Order />}
       </div>
     </div>
   );
 };
-export async function getServerSideProps({ req }) {
-  const session = await getSession({ req });
+export async function getServerSideProps({ params}) {
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth/login",
-        permanent: false,
-      },
-    };
-  }
-
+  const user = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/users/${params.id}`
+  );
   return {
     props: {
-      session,
+      user: user ? user.data : null
     },
   };
 }
