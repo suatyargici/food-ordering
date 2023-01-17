@@ -128,6 +128,7 @@ const Profile = ({user}) => {
             width={100}
             height={100}
             className="rounded-full"
+           
           />
           <b className="mt-1 text-2xl">{user.fullName}</b>
         </div>
