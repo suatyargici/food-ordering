@@ -2,7 +2,7 @@ import React from 'react'
 import Title from '../ui/Title'
 import MenuItem from './MenuItem'
 
-const MenuWrapper = () => {
+const MenuWrapper = ({categoryList}) => {
   return (
     <div className="container mx-auto  mb-16">
     <div className="flex flex-col items-center w-full">

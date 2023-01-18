@@ -4,6 +4,7 @@ import Campaigns from "../../components/Campaings";
 import Carousel from "../../components/Carousel"
 
 const Index = () => {
+
   return (
     <div >
       <Carousel />
