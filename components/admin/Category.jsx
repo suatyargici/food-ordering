@@ -32,6 +32,18 @@ const Category = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/categories/${id}`,
+        
+      );
+      setCategories(categories.filter((category) => category._id !== id));
+      setInputText("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="mt-5 flex-1 lg:mt-0 lg:p-8">
       <Title addClass="text-[40px]">Category</Title>
@@ -46,14 +58,14 @@ const Category = () => {
             Add
           </button>
         </div>
-        <div className="mt-10">
+        <div className="mt-10 max-h-[300px] overflow-y-auto custom-vertical-scrollbar p-2" >
           {categories.map((category) => (
             <div className="mt-4 flex justify-between" key={category._id}>
               <b className="text-xl">{category.title}</b>
               <button
                 className="btn-primary !bg-danger"
                 onClick={() =>
-                  setCategories(categories.filter((cat) => cat !== category))
+                  handleDelete(category._id)
                 }
               >
                 Delete
