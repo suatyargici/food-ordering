@@ -6,6 +6,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Open Sans", sans-serif;
+  /* @apply scrollbar scrollbar-thumb-rose-500  */
 }
 
 * {
@@ -34,3 +35,18 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+
+::-webkit-scrollbar{
+  width: 12px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(transparent, #FFEA20);
+  border-radius: 10px;
+}
+
+/* ::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(transparent, #FFEA20);
+
+} */

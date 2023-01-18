@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Input from "../form/Input";
 import Title from "../ui/Title";
 
@@ -27,6 +28,7 @@ const Category = () => {
       );
       setCategories([...categories, res.data]);
       setInputText("");
+      toast.success("Category Created!");
     } catch (err) {
       console.log(err);
     }
