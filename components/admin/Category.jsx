@@ -34,12 +34,19 @@ const Category = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/categories/${id}`,
-        
-      );
-      setCategories(categories.filter((category) => category._id !== id));
-      setInputText("");
+      if (
+        confirm(
+          "Are you sure you want to delete this category? (This will also delete all the products in this category)"
+        )
+      ) {
+        const res = await axios.delete(
+          `${process.env.NEXT_PUBLIC_API_URL}/categories/${id}`
+        );
+        setCategories(
+          categories.filter((category) => category._id !== res.data._id)
+        );
+        setInputText("");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -58,15 +65,13 @@ const Category = () => {
             Add
           </button>
         </div>
-        <div className="mt-10 max-h-[300px] overflow-y-auto custom-vertical-scrollbar p-2" >
-          {categories.map((category) => (
+        <div className="custom-vertical-scrollbar mt-10 max-h-[300px] overflow-y-auto p-2">
+          {categories?.map((category) => (
             <div className="mt-4 flex justify-between" key={category._id}>
               <b className="text-xl">{category.title}</b>
               <button
                 className="btn-primary !bg-danger"
-                onClick={() =>
-                  handleDelete(category._id)
-                }
+                onClick={() => handleDelete(category._id)}
               >
                 Delete
               </button>
