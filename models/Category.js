@@ -1,14 +1,15 @@
 import mongoose from "mongoose";
 
 const CategorySchema = new mongoose.Schema(
-    {
-        title: {
-            type: String,
-            required: true,
-            maxLength:60,
-        },
+  {
+    title: {
+      type: String,
+      required: true,
+      maxLength: 60,
     },
-    { timestamps: true }
+  },
+  { timestamps: true }
 );
 
-export default mongoose.models.Category || mongoose.model("Category", CategorySchema);
+export default mongoose.models.Category ||
+  mongoose.model("Category", CategorySchema);
