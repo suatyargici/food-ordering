@@ -9,13 +9,13 @@ import Password from "../../components/profile/Password";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import axios from "axios";
-
+import AddProduct from "../../components/admin/AddProduct";
 
 const Profile = () => {
   const [tabs, setTabs] = useState(0);
+  const [isProductModal, setIsProductModal] = useState(false);
 
   const { push } = useRouter();
-
 
   const closeAdminAccount = async () => {
     try {
@@ -32,9 +32,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex px-10 min-h-[calc(100vh_-_433px)] lg:flex-row flex-col lg:mb-0 mb-10">
-      <div className="lg:w-80 w-100 flex-shrink-0">
-        <div className="relative flex flex-col items-center px-10 py-5 border border-b-0">
+    <div className="mb-10 flex min-h-[calc(100vh_-_433px)] flex-col px-10 lg:mb-0 lg:flex-row">
+      <div className="w-100 flex-shrink-0 lg:w-80">
+        <div className="relative flex flex-col items-center border border-b-0 px-10 py-5">
           <Image
             src="/images/admin.png"
             alt=""
@@ -42,11 +42,11 @@ const Profile = () => {
             height={100}
             className="rounded-full"
           />
-          <b className="text-2xl mt-1">Admin</b>
+          <b className="mt-1 text-2xl">Admin</b>
         </div>
         <ul className="text-center font-semibold">
           <li
-            className={`border w-full p-3 cursor-pointer hover:bg-primary hover:text-white transition-all ${
+            className={`w-full cursor-pointer border p-3 transition-all hover:bg-primary hover:text-white ${
               tabs === 0 && "bg-primary text-white"
             }`}
             onClick={() => setTabs(0)}
@@ -55,7 +55,7 @@ const Profile = () => {
             <button className="ml-1 ">Products</button>
           </li>
           <li
-            className={`border w-full p-3 cursor-pointer hover:bg-primary hover:text-white transition-all ${
+            className={`w-full cursor-pointer border p-3 transition-all hover:bg-primary hover:text-white ${
               tabs === 1 && "bg-primary text-white"
             }`}
             onClick={() => setTabs(1)}
@@ -64,7 +64,7 @@ const Profile = () => {
             <button className="ml-1">Orders</button>
           </li>
           <li
-            className={`border w-full p-3 cursor-pointer hover:bg-primary hover:text-white transition-all ${
+            className={`w-full cursor-pointer border p-3 transition-all hover:bg-primary hover:text-white ${
               tabs === 2 && "bg-primary text-white"
             }`}
             onClick={() => setTabs(2)}
@@ -72,23 +72,23 @@ const Profile = () => {
             <i className="fa fa-ellipsis-h"></i>
             <button className="ml-1">Categories</button>
           </li>
-          <li   
-          className={`border w-full p-3 cursor-pointer hover:bg-primary hover:text-white transition-all ${
-            tabs === 3 && "bg-primary text-white"
-          }`}     
+          <li
+            className={`w-full cursor-pointer border p-3 transition-all hover:bg-primary hover:text-white ${
+              tabs === 3 && "bg-primary text-white"
+            }`}
             onClick={() => setTabs(3)}
           >
             <i className="fa fa-window-maximize"></i>
             <button className="ml-1">Footer</button>
           </li>
           <li
-            className={`border w-full p-3 cursor-pointer hover:bg-primary hover:text-white transition-all ${
+            className={`w-full cursor-pointer border p-3 transition-all hover:bg-primary hover:text-white ${
               tabs === 4 && "bg-primary text-white"
             }`}
             onClick={closeAdminAccount}
           >
             <i className="fa fa-sign-out"></i>
-            <button className="ml-1" >Exit</button>
+            <button className="ml-1">Exit</button>
           </li>
         </ul>
       </div>
@@ -96,6 +96,7 @@ const Profile = () => {
       {tabs === 1 && <Order />}
       {tabs === 2 && <Category />}
       {tabs === 3 && <Footer />}
+      {isProductModal && <AddProduct setIsProductModal={setIsProductModal} />}
     </div>
   );
 };
