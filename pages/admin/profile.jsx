@@ -97,6 +97,12 @@ const Profile = () => {
       {tabs === 2 && <Category />}
       {tabs === 3 && <Footer />}
       {isProductModal && <AddProduct setIsProductModal={setIsProductModal} />}
+      <button
+        className="btn-primary absolute bottom-14 right-10 !h-12 !w-12 !p-0 text-4xl"
+        onClick={() => setIsProductModal(true)}
+      >
+        +
+      </button>
     </div>
   );
 };
