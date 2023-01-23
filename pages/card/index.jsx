@@ -39,7 +39,7 @@ const Card = () => {
                   </td>
                   <td className="whitespace-nowrap py-4 px-6 font-medium hover:text-white">
                     {product.extras.map((item) => (
-                      <span key={item.id}>{item.name}, </span>
+                      <span key={item.id}>{item.title}, </span>
                     ))}
                   </td>
                   <td className="whitespace-nowrap py-4 px-6 font-medium hover:text-white">
