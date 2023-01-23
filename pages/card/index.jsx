@@ -2,10 +2,11 @@ import Image from "next/image";
 import Title from "../../components/ui/Title";
 import { useSelector, useDispatch } from "react-redux";
 import { reset } from "../../redux/cartSlice";
-const Card = () => {
+import axios from "axios";
+const Card = ({userList}) => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
+ console.log(cart.products)
   return (
     <div className="min-h-[calc(100vh_-_433px)]">
       <div className="flex flex-col items-center justify-between md:flex-row">
@@ -39,7 +40,7 @@ const Card = () => {
                   </td>
                   <td className="whitespace-nowrap py-4 px-6 font-medium hover:text-white">
                     {product.extras.map((item) => (
-                      <span key={item.id}>{item.title}, </span>
+                      <span key={item.id}>{item.text} </span>
                     ))}
                   </td>
                   <td className="whitespace-nowrap py-4 px-6 font-medium hover:text-white">
@@ -74,6 +75,16 @@ const Card = () => {
       </div>
     </div>
   );
+};
+
+export const getStaticProps = async () => {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`);
+
+  return {
+    props: {
+      userList: res.data ? res.data : [],
+    },
+  }
 };
 
 export default Card;
