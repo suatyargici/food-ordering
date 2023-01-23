@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import axios from "axios";
 import AddProduct from "../../components/admin/AddProduct";
+import Products from "../../components/admin/Products";
 
 const Profile = () => {
   const [tabs, setTabs] = useState(0);
@@ -92,7 +93,7 @@ const Profile = () => {
           </li>
         </ul>
       </div>
-      {tabs === 0 && <Account />}
+      {tabs === 0 && <Products />}
       {tabs === 1 && <Order />}
       {tabs === 2 && <Category />}
       {tabs === 3 && <Footer />}
