@@ -4,7 +4,7 @@ import { useState } from "react";
 import Category from "../../components/admin/Category";
 import Footer from "../../components/admin/Footer";
 import Account from "../../components/profile/Account";
-import Order from "../../components/profile/Order";
+import Order from "../../components/admin/Order";
 import Password from "../../components/profile/Password";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";

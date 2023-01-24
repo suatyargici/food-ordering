@@ -1,4 +1,3 @@
-
 import Order from "../../../models/Order";
 import dbConnect from "../../../util/dbConnect";
 
@@ -11,8 +10,8 @@ const handler = async (req, res) => {
 
   if (method === "GET") {
     try {
-      const product = await Order.findById(id);
-      res.status(200).json(product);
+      const getOrder = await Order.findById(id);
+      res.status(200).json(getOrder);
     } catch (err) {
       console.log(err);
     }
@@ -20,8 +19,19 @@ const handler = async (req, res) => {
 
   if (method === "DELETE") {
     try {
-      const product = await Order.findByIdAndDelete(id);
-      res.status(200).json(product);
+      const deleteOrder = await Order.findByIdAndDelete(id);
+      res.status(200).json(deleteOrder);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  if (method === "PUT") {
+    try {
+      const orderPut = await Order.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
+      res.status(200).json(orderPut);
     } catch (err) {
       console.log(err);
     }

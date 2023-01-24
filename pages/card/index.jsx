@@ -11,13 +11,13 @@ const Card = ({ userList }) => {
   const { data: session } = useSession();
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
   const user = userList?.find((user) => user.email === session?.user?.email);
+  const router = useRouter();
 
   const newOrder = {
-    customer: user?.fullName ? user?.fullName : "",
-    address: user?.address ? user?.address : "",
-    total: cart?.total,
+    customer: user?.fullName,
+    address: user?.address ? user?.address : "No address",
+    total: cart.total,
     method: 0,
   };
 
@@ -68,13 +68,13 @@ const Card = ({ userList }) => {
               </tr>
             </thead>
             <tbody>
-              {cart.products.map((product) => (
+            {cart.products.map((product, index) => (
                 <tr
                   className="border-gray-700 bg-secondary transition-all hover:bg-primary"
-                  key={product._id}
+                  key={index}
                 >
                   <td className="flex items-center justify-center gap-x-1 whitespace-nowrap py-4 px-6 font-medium hover:text-white">
-                    <Image src="/images/f1.png" alt="" width={50} height={50} />
+                  <Image src={product?.img} alt="" width={50} height={50} />
                     <span>{product.name}</span>
                   </td>
                   <td className="whitespace-nowrap py-4 px-6 font-medium hover:text-white">
