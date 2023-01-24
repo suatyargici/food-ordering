@@ -12,7 +12,6 @@
   ...📄 {path}.ts
 
 📂 public
-  📂 icons
   📂 images
   📄 favicon.ico
   📄 robots.txt
