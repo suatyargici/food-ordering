@@ -14,7 +14,7 @@ body {
 }
 
 .btn-primary {
-  @apply cursor-pointer rounded-3xl bg-primary px-[30px] py-[8px] text-white transition-all hover:opacity-70 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply cursor-pointer rounded-3xl bg-primary px-[30px] py-[8px] text-white transition-all hover:opacity-70 ;
 }
 
 .slick-dots {
