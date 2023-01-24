@@ -3,10 +3,49 @@ import Title from "../../components/ui/Title";
 import { useSelector, useDispatch } from "react-redux";
 import { reset } from "../../redux/cartSlice";
 import axios from "axios";
-const Card = ({userList}) => {
+import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+
+const Card = ({ userList }) => {
+  const { data: session } = useSession();
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
- console.log(cart.products)
+
+  const user = userList?.find((user) => user.email === session?.user?.email);
+
+  const newOrder = {
+    customer: user?.fullName ? user?.fullName : "",
+    address: user?.address ? user?.address : "",
+    total: cart?.total,
+    method: 0,
+  };
+
+  const createOrder = async () => {
+    try {
+      if (session) {
+        if (confirm("Are you sure to order?")) {
+          const res = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/orders`,
+            newOrder
+          );
+          if (res.status === 201) {
+            router.push(`/order/${res.data._id}`);
+            dispatch(reset());
+            toast.success("Order created successfully", {
+              autoClose: 1000,
+            });
+          }
+        }
+      } else {
+        toast.error("Please login first.", {
+          autoClose: 1000,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="min-h-[calc(100vh_-_433px)]">
       <div className="flex flex-col items-center justify-between md:flex-row">
@@ -32,7 +71,7 @@ const Card = ({userList}) => {
               {cart.products.map((product) => (
                 <tr
                   className="border-gray-700 bg-secondary transition-all hover:bg-primary"
-                  key={product.id}
+                  key={product._id}
                 >
                   <td className="flex items-center justify-center gap-x-1 whitespace-nowrap py-4 px-6 font-medium hover:text-white">
                     <Image src="/images/f1.png" alt="" width={50} height={50} />
@@ -66,7 +105,7 @@ const Card = ({userList}) => {
           <div>
             <button
               className="btn-primary mt-4 w-52 md:w-auto"
-              onClick={() => dispatch(reset())}
+             onClick={createOrder}
             >
               CHECKOUT NOW!
             </button>
@@ -84,7 +123,7 @@ export const getStaticProps = async () => {
     props: {
       userList: res.data ? res.data : [],
     },
-  }
+  };
 };
 
 export default Card;
