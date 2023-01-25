@@ -29,7 +29,7 @@ const Card = ({ userList }) => {
             `${process.env.NEXT_PUBLIC_API_URL}/orders`,
             newOrder
           );
-          if (res.status === 201) {
+          if (res.status === 200) {
             router.push(`/order/${res.data._id}`);
             dispatch(reset());
             toast.success("Order created successfully", {

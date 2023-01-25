@@ -1,12 +1,40 @@
+import axios from "axios";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const Order = ({ order }) => {
+  const [orders, setOrders] = useState([]);
+  const status = order?.status;
+
+  const statusClass = (index) => {
+    const status = order?.status;
+
+    const statusClass = (index) => {
+      if (index - status < 1) return "";
+      if (index - status === 1) return "animate-pulse";
+      if (index - status > 1) return "";
+    };
+  }
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/orders`
+        );
+        setOrders(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getOrders();
+  }, []);
+
   return (
     <div className="overflow-x-auto">
-      <div className="min-h-[calc(100vh_-_433px)] flex  justify-center items-center flex-col p-10  min-w-[1000px]">
-        <div className=" flex items-center flex-1  w-full max-h-28">
-          <table className="w-full text-sm text-center text-gray-500">
-            <thead className="text-xs text-gray-400 uppercase bg-gray-700">
+      <div className="flex min-h-[calc(100vh_-_433px)]  min-w-[1000px] flex-col items-center justify-center  p-10">
+        <div className=" flex max-h-28 w-full  flex-1 items-center">
+          <table className="w-full text-center text-sm text-gray-500">
+            <thead className="bg-gray-700 text-xs uppercase text-gray-400">
               <tr>
                 <th scope="col" className="py-3 px-6">
                   ORDER ID
@@ -23,25 +51,25 @@ const Order = ({ order }) => {
               </tr>
             </thead>
             <tbody>
-              <tr className="transition-all bg-secondary border-gray-700 hover:bg-primary ">
-                <td className="py-4 px-6 font-medium whitespace-nowrap hover:text-white flex items-center gap-x-1 justify-center">
-                {order?._id.substring(0, 5)}...
+              <tr className="border-gray-700 bg-secondary transition-all hover:bg-primary ">
+                <td className="flex items-center justify-center gap-x-1 whitespace-nowrap py-4 px-6 font-medium hover:text-white">
+                  {order?._id.substring(0, 5)}...
                 </td>
-                <td className="py-4 px-6 font-medium whitespace-nowrap hover:text-white">
-                {order?.customer}
+                <td className="whitespace-nowrap py-4 px-6 font-medium hover:text-white">
+                  {order?.customer}
                 </td>
-                <td className="py-4 px-6 font-medium whitespace-nowrap hover:text-white">
-                {order?.address}
+                <td className="whitespace-nowrap py-4 px-6 font-medium hover:text-white">
+                  {order?.address}
                 </td>
-                <td className="py-4 px-6 font-medium whitespace-nowrap hover:text-white">
-                ${order?.total}
+                <td className="whitespace-nowrap py-4 px-6 font-medium hover:text-white">
+                  ${order?.total}
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div className="flex justify-between w-full p-10 bg-primary mt-6">
-          <div className="relative flex flex-col">
+        <div className="mt-6 flex w-full justify-between bg-primary p-10">
+          <div className={`relative flex flex-col ${statusClass(0)}`}>
             <Image
               src="/images/paid.png"
               alt=""
@@ -51,7 +79,7 @@ const Order = ({ order }) => {
             />
             <span>Payment</span>
           </div>
-          <div className="relative flex flex-col animate-pulse">
+          <div className={`relative flex flex-col ${statusClass(1)}`}>
             <Image
               src="/images/bake.png"
               alt=""
@@ -61,7 +89,7 @@ const Order = ({ order }) => {
             />
             <span>Preparing</span>
           </div>
-          <div className="relative flex flex-col">
+          <div className={`relative flex flex-col ${statusClass(2)}`}>
             <Image
               src="/images/bike.png"
               alt=""
@@ -71,7 +99,7 @@ const Order = ({ order }) => {
             />
             <span>On the way</span>
           </div>
-          <div className="relative flex flex-col">
+          <div className={`relative flex flex-col ${statusClass(3)}`}>
             <Image
               src="/images/delivered.png"
               alt=""
