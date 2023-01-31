@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Title from "../ui/Title";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   const [footer, setFooter] = useState([]);
