@@ -14,20 +14,29 @@ import "../styles/globals.css";
 import "nprogress/nprogress.css";
 import "react-toastify/dist/ReactToastify.css";
 
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+const queryClient = new QueryClient();
+
   return (
-    <SessionProvider session={session}>
-      <Toastify/>
-      <Provider store={store}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </Provider>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider session={session}>
+        <Toastify />
+        <Provider store={store}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
+      </SessionProvider>
+      <ReactQueryDevtools position="bottom-right" />
+    </QueryClientProvider>
   );
 }
 
