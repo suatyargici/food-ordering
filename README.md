@@ -54,7 +54,7 @@ Main folder structure
 
 📂 pages
   📂 api
-    ...📄 {apiPath}.ts
+    ...📄 {apiPath}.js
   _app.tsx ?
   _document.jsx ?
   ...📄 {path}.js
@@ -65,10 +65,6 @@ Main folder structure
   📄 favicon.ico
   📄 robots.txt
 
-📂 stories
-  ...📄 {Component}.stories.tsx
-  ...📂 {page}
-     ...📄 {Component}.stories.tsx
 
 📂 styles
   📄 globals.scss
